@@ -205,6 +205,10 @@ public class WeaselOntologyManager {
         LOGGER.info("Handle individual data.");
         OwlListDetails wd = dataHandler.handleParticularIndividual(iri, ontology);
         result = wd;
+      } else if (ontology.containsDatatypeInSignature(iri)){
+        LOGGER.info("Handle datatype");
+        OwlListDetails wd = dataHandler.handleParticularDatatype(iri, ontology);
+        result = wd;
       }
     }
 
