@@ -56,6 +56,7 @@ public class PropertyRenderTag extends SimpleTagSupport {
         renderAnyUri(property);
         break;
       case AXIOM:
+        System.out.println(property.toString());
         renderAxiom(property);
         break;
       case OTHER:

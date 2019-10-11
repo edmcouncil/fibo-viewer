@@ -41,6 +41,7 @@ import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLDataPropertyAxiom;
 import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLDatatypeDefinitionAxiom;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLObjectPropertyAxiom;
@@ -125,10 +126,10 @@ public class OwlDataHandler {
 
   public OwlListDetails handleParticularDatatype(IRI iri, OWLOntology ontology) {
     OwlListDetails resultDetails = new OwlListDetails();
-    Iterator<OWLDataProperty> dataTypeIterator = ontology.dataPropertiesInSignature().iterator();
+    Iterator<OWLDatatype> dataTypeIterator = ontology.datatypesInSignature().iterator();
 
     while (dataTypeIterator.hasNext()) {
-      OWLDataProperty data = dataTypeIterator.next();
+      OWLDatatype data = dataTypeIterator.next();
 
       if (data.getIRI().equals(iri)) {
         LOGGER.debug("[Data Handler] Find owl dataType wih iri: {}", iri.toString());
@@ -198,6 +199,53 @@ public class OwlDataHandler {
 
     Iterator<OWLDataPropertyAxiom> axiomsIterator = ontology.axioms(obj).iterator();
     return handleAxioms(axiomsIterator, obj.getIRI());
+  }
+
+  private OwlDetailsProperties<PropertyValue> handleAxioms(
+      OWLDatatype obj,
+      OWLOntology ontology) {
+
+    Iterator<OWLDatatypeDefinitionAxiom> axiomsIterator = ontology.axioms(obj).iterator();
+
+    IRI elementIri = obj.getIRI();
+    OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();
+    String iriFragment = elementIri.getFragment();
+    String splitFragment = StringUtils.getFragment(elementIri);
+    Boolean fixRenderedIri = !iriFragment.equals(splitFragment); //if fragments is not the same we must repair rendered value
+    while (axiomsIterator.hasNext()) {
+      OWLDatatypeDefinitionAxiom axiom = axiomsIterator.next();
+      String value = rendering.render(axiom);
+    while(axiomsIterator.hasNext()){
+      LOGGER.debug("axiom " + axiom.getDataRange().toString());
+    }
+      Iterator<OWLEntity> signature = axiom.signature().iterator();
+      while (signature.hasNext()) {
+        OWLEntity e = signature.next();
+        LOGGER.debug("Entity val " + rendering.render(e));
+        LOGGER.debug("Entity val Ia " + e.toString());
+        LOGGER.debug("Entity val II " + e.toStringID());
+        LOGGER.debug("Entity val III " + e.getIRI().toString());
+      }
+      value = fixRenderedValue(value, iriFragment, splitFragment, fixRenderedIri);
+
+      String key = axiom.getAxiomType().getName();
+      OwlAxiomPropertyValue opv = new OwlAxiomPropertyValue();
+      opv.setValue(value);
+
+      opv.setType(WeaselOwlType.AXIOM);
+      LOGGER.debug("[Data Handler] Find Axiom \"{}\" with type \"{}\"", value, key);
+      Boolean isRestriction = isRestriction(axiom);
+
+      if (!isRestriction && axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)) {
+        LOGGER.trace("[Data Handler] Find non restriction SubClassOf");
+        opv.setType(WeaselOwlType.TAXONOMY);
+      }
+
+      processingAxioms(axiom, fixRenderedIri, iriFragment, splitFragment, opv, value);
+      result.addProperty(key, opv);
+    }
+    result.sortPropertiesInAlphabeticalOrder();
+    return result;
   }
 
   private OwlDetailsProperties<PropertyValue> handleAxioms(
@@ -285,7 +333,7 @@ public class OwlDataHandler {
     while (axiomsIterator.hasNext()) {
       T axiom = axiomsIterator.next();
       String value = rendering.render(axiom);
-
+      //LOGGER.debug("Rendered Val" + value);
       value = fixRenderedValue(value, iriFragment, splitFragment, fixRenderedIri);
 
       String key = axiom.getAxiomType().getName();
@@ -293,11 +341,11 @@ public class OwlDataHandler {
       opv.setValue(value);
 
       opv.setType(WeaselOwlType.AXIOM);
-      LOGGER.trace("[Data Handler] Find Axiom \"{}\" with type \"{}\"", value, key);
+      //LOGGER.debug("[Data Handler] Find Axiom \"{}\" with type \"{}\"", value, key);
       Boolean isRestriction = isRestriction(axiom);
 
       if (!isRestriction && axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)) {
-        LOGGER.trace("[Data Handler] Find non restriction SubClassOf");
+        //LOGGER.trace("[Data Handler] Find non restriction SubClassOf");
         opv.setType(WeaselOwlType.TAXONOMY);
       }
 
@@ -324,8 +372,10 @@ public class OwlDataHandler {
     while (iterator.hasNext()) {
       OWLEntity next = iterator.next();
       String eSignature = rendering.render(next);
+      LOGGER.debug("jeden", next.toStringID());
       eSignature = fixRenderedIri && iriFragment.equals(eSignature) ? splitFragment : eSignature;
       String key = null;
+      // LOGGER.debug("dwa",key);
 
       for (int i = 0; i < splited.length; i++) {
         String string = splited[i];
@@ -339,6 +389,7 @@ public class OwlDataHandler {
         }
         if (hasClosingParenthesis) {
           string = string.substring(0, string.length() - countClosingParenthesis);
+          LOGGER.debug(key);
         }
         if (string.equals(eSignature)) {
           String generatedKey = String.format(argPattern, i);
@@ -372,6 +423,10 @@ public class OwlDataHandler {
 
   private String fixRenderedValue(String value, String iriFragment, String splitFragment, Boolean fixRenderedIri) {
     String[] split = value.split(" ");
+    if (split.length == 1) {
+
+      return value;
+    }
     if (split[1].equals("SubClassOf")) {
       split[0] = "";
       split[1] = "";
