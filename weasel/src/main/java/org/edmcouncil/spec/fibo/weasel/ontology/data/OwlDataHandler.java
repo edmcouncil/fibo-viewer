@@ -96,7 +96,7 @@ public class OwlDataHandler {
             .filter((pv) -> (pv.getType().equals(WeaselOwlType.TAXONOMY)))
             .collect(Collectors.toList());
         OwlDetailsProperties<PropertyValue> handleSubClassOf = handleParticularSubClassOf(ontology, clazz);
-        OwlDetailsProperties<PropertyValue> individuals = handleParticularIndividual(ontology, clazz);
+        OwlDetailsProperties<PropertyValue> individuals = getInstancesByClass(ontology, clazz);
         OwlDetailsProperties<PropertyValue> inheritedAxioms = handleInheritedAxioms(ontology, clazz);
         //This code is only for fibo ontology, this line can be deleted for other ontologies.
         //OwlDetailsProperties<PropertyValue> modules = fiboDataHandler.handleFiboModulesData(ontology, clazz);
@@ -121,16 +121,14 @@ public class OwlDataHandler {
     }
     return resultDetails;
   }
-  
+
   /**
-   * This method is used to handle all Particular Individual.
+   * This method collects all particular Individual of the given class.
    *
-   * @param ontology This is a loaded ontology.
-   * @param iri Iri is used to identify an ontology.
+   * @param ontology Actions will be performed for the given ontology.
+   * @param iri Iri is used to identify for the given ontology.
    * @return Set of Individual.
    */
-  
-
   public OwlListDetails handleParticularIndividual(IRI iri, OWLOntology ontology) {
     OwlListDetails resultDetails = new OwlListDetails();
     Iterator<OWLNamedIndividual> individualIterator = ontology.individualsInSignature().iterator();
@@ -385,11 +383,11 @@ public class OwlDataHandler {
   }
 
   /**
-   * This method is used to handle all Particular DataProperty from ontology.
+   * This method is collects particular DataProperty of the given class.
    *
-   * @param ontology This is a loaded ontology.
-   * @param iri Iri is used to identify an ontology.
-   * @return Set of Data Property.
+   * @param ontology Actions will be performed for the given ontology. 
+   * @param iri Iri is used to identify for the given ontology.
+   * @return A DataProperty list.
    */
   public OwlListDetails handleParticularDataProperty(IRI iri, OWLOntology ontology) {
     OwlListDetails resultDetails = new OwlListDetails();
@@ -422,12 +420,11 @@ public class OwlDataHandler {
   }
 
   /**
-   * This method is used to to handle all Particular ObjectProperty.
+   * This method collects Particular ObjectProperty of the given class.
    *
-   *
-   * @param ontology This is a loaded ontology.
-   * @param iri Iri is used to identify an ontology.
-   * @return Set of ObjectProperty.
+   * @param ontology Actions will be performed for the given ontology.
+   * @param iri Iri is used to identify for the given ontology.
+   * @return An ObjectProperty list.
    */
   public OwlListDetails handleParticularObjectProperty(IRI iri, OWLOntology ontology) {
     OwlListDetails resultDetails = new OwlListDetails();
@@ -458,6 +455,13 @@ public class OwlDataHandler {
     return resultDetails;
   }
 
+  /**
+   * This method collects SubElements of the given class.
+   *
+   * @param ontology Actions will be performed for the given ontology.
+   * @param type
+   * @return SubElements list.
+   */
   private List<PropertyValue> getSubElements(OWLEntity entity, OWLOntology ontology, WeaselOwlType type) {
     Stream<OWLProperty> propertyStream = null;
     OWLProperty prop = null;
@@ -536,11 +540,13 @@ public class OwlDataHandler {
   }
 
   /**
-   * This method is used to display SubClassOf
+   * This method collects particular SubClassOf of the given class. As a result function operation
+   * returns label and iri for each instance.
    *
-   * @param ontology This is a loaded ontology.
-   * @param clazz Clazz are all properties of Inherited Axioms.
-   * @return properties of Inherited Axioms.
+   * @param ontology Actions will be performed for the given ontology.
+   * @param clazz Instances are searched for the class. This class must appear in the ontology
+   * given.
+   * @return Particular SubClassOf.
    */
   public OwlDetailsProperties<PropertyValue> handleParticularSubClassOf(OWLOntology ontology, OWLClass clazz) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<PropertyValue>();
@@ -560,13 +566,15 @@ public class OwlDataHandler {
   }
 
   /**
-   * This method is used to display Particular Individual
+   * This method collects instances of the given class. A reasoner is used. As a result function
+   * operation returns label and iri for each instance.
    *
-   * @param ontology This is a loaded ontology.
-   * @param clazz Clazz are all properties of Inherited Axioms.
-   * @return properties of Inherited Axioms.
+   * @param ontology Actions will be performed for the given ontology.
+   * @param clazz Instances are searched for the class. This class must appear in the ontology
+   * given.
+   * @return An Instances list.
    */
-  private OwlDetailsProperties<PropertyValue> handleParticularIndividual(OWLOntology ontology, OWLClass clazz) {
+  private OwlDetailsProperties<PropertyValue> getInstancesByClass(OWLOntology ontology, OWLClass clazz) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();
     OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();
     OWLReasoner reasoner = reasonerFactory.createNonBufferingReasoner(ontology);
@@ -585,11 +593,12 @@ public class OwlDataHandler {
   }
 
   /**
-   * This method is used to display Inherited Axioms
+   * This method is collects Inherited Axioms of given class. A reasoner is used.
    *
-   * @param ontology Paramter which loaded ontology.
-   * @param clazz Class are all properties of Inherited Axioms.
-   * @return properties of Inherited Axioms.
+   * @param ontology Actions will be performed for the given ontology.
+   * @param clazz Inherited Axioms are searched for the class. This class must appear in the
+   * ontology given.
+   * @return An Inherited Axiom list.
    */
   private OwlDetailsProperties<PropertyValue> handleInheritedAxioms(OWLOntology ontology, OWLClass clazz) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();
@@ -616,6 +625,10 @@ public class OwlDataHandler {
     return result;
   }
 
+  
+  
+  
+  
   public OwlListDetails handleOntologyMetadata(IRI iri, OWLOntology ontology) {
 
     OwlDetailsProperties<PropertyValue> metadata = fiboDataHandler.handleFiboOntologyMetadata(iri, ontology);

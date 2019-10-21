@@ -86,6 +86,7 @@ public class WeaselOntologyManager {
    * This method is used to load ontology from file
    *
    * @param ontoPath OntoPath is the access path from which the ontology is being loaded.
+   * @return Set of ontology.
    */
   private void loadOntologyFromFile(String ontoPath) throws IOException, OWLOntologyCreationException {
     FileSystemManager fsm = new FileSystemManager();
@@ -116,7 +117,7 @@ public class WeaselOntologyManager {
    * This method is used to load ontology from URL
    *
    * @param ontoURL OntoUrl is the web address from which the ontology is being loaded.
-   * @return set of ontology
+   * @return Set of ontology.
    */
   private Set<OWLOntology> loadOntologyFromURL(String ontoURL) throws IOException, OWLOntologyCreationException {
 
@@ -141,11 +142,11 @@ public class WeaselOntologyManager {
   }
 
   /**
-   * This method is used to open all Ontologies from directory
+   * This method is used to open all Ontologies from directory.
    *
    * @param ontologiesDir OntologiesDir is a loaded ontology file.
    * @param manager Manager loading and acessing ontologies.
-   * @return set of ontology.
+   * @return Set of ontology.
    */
   private Set<OWLOntology> openOntologiesFromDirectory(File ontologiesDir, OWLOntologyManager manager) throws OWLOntologyCreationException {
     Set<OWLOntology> result = new HashSet<>();
@@ -161,7 +162,6 @@ public class WeaselOntologyManager {
         Set<OWLOntology> tmp = openOntologiesFromDirectory(file, manager);
         result.addAll(tmp);
       }
-
     }
     return result;
   }
