@@ -369,7 +369,8 @@ public class FiboDataHandler {
   }
 
   /**
-   *
+   *This method is collect the path to the module in which it is located.
+   * 
    * @param elementIri IRI element to which path we want to find
    * @param ontology
    * @return Returns the path to the module in which it is located, empty list if element not
@@ -400,6 +401,9 @@ public class FiboDataHandler {
   }
 
   /**
+   * This method find elements by iri.
+   * 
+   * @param elementIri ElementIri is used to identify for the given ontology.
    * @return ontology iri where the element is present
    */
   private String findElementInOntology(String elementIri) {

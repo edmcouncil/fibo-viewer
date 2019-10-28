@@ -257,11 +257,18 @@ public class OwlDataHandler {
     return null;
   }
 
+  /**
+   * This method is collects Axioms of the given class.
+   *
+   * @param axiomsIterator The axiomsIterator the passes through each element.
+   * @param iri Iri is used to identify for the given ontology.
+   * @return Axioms
+   */
   private <T extends OWLAxiom> OwlDetailsProperties<PropertyValue> handleAxioms(
-      Iterator<T> axiomsIterator, IRI elementIri) {
+      Iterator<T> axiomsIterator, IRI iri) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();
-    String iriFragment = elementIri.getFragment();
-    String splitFragment = StringUtils.getFragment(elementIri);
+    String iriFragment = iri.getFragment();
+    String splitFragment = StringUtils.getFragment(iri);
     Boolean fixRenderedIri = !iriFragment.equals(splitFragment); //if fragments is not the same we must repair rendered value
     while (axiomsIterator.hasNext()) {
       T axiom = axiomsIterator.next();
@@ -289,6 +296,15 @@ public class OwlDataHandler {
     return result;
   }
 
+  /**
+   * This method compare iri to
+   *
+   * @param axiom
+   * @param iriFragment
+   * @param opv
+   * @return
+   *
+   */
   private <T extends OWLAxiom> void processingAxioms(
       T axiom,
       Boolean fixRenderedIri,
@@ -385,7 +401,7 @@ public class OwlDataHandler {
   /**
    * This method is collects particular DataProperty of the given class.
    *
-   * @param ontology Actions will be performed for the given ontology. 
+   * @param ontology Actions will be performed for the given ontology.
    * @param iri Iri is used to identify for the given ontology.
    * @return A DataProperty list.
    */
@@ -625,10 +641,13 @@ public class OwlDataHandler {
     return result;
   }
 
-  
-  
-  
-  
+  /**
+   * This method is collects Metadata of given class.
+   *
+   * @param ontology Actions will be performed for the given ontology.
+   * @param iri Iri is used to identify for the given ontology.
+   * @return An Metadata list.
+   */
   public OwlListDetails handleOntologyMetadata(IRI iri, OWLOntology ontology) {
 
     OwlDetailsProperties<PropertyValue> metadata = fiboDataHandler.handleFiboOntologyMetadata(iri, ontology);
