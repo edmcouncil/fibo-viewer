@@ -157,6 +157,15 @@ public class FiboDataHandler {
     return domainIri;
   }
 
+  
+  
+  /**
+   * This method collects metadata of the given class.
+   * @param iri Iri is used to identify for the given ontology.
+   * @param ontology Actions will be performed for the given ontology.
+   * @return metadata
+   */
+  
   public OwlDetailsProperties<PropertyValue> handleFiboOntologyMetadata(IRI iri, OWLOntology ontology) {
     OWLOntologyManager manager = ontology.getOWLOntologyManager();
     OwlDetailsProperties<PropertyValue> annotations = null;
@@ -406,6 +415,7 @@ public class FiboDataHandler {
    * @param elementIri ElementIri is used to identify for the given ontology.
    * @return ontology iri where the element is present
    */
+  
   private String findElementInOntology(String elementIri) {
 
     String ontologyIri = null;
