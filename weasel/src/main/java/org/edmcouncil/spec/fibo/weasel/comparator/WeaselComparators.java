@@ -11,6 +11,11 @@ import org.edmcouncil.spec.fibo.config.configuration.model.impl.ConfigStringElem
  */
 public class WeaselComparators {
 
+  /**
+   *
+   * @param prioritySortList
+   * @return
+   */
   public static Comparator<String> getComparatorWithPriority(List<ConfigStringElement> prioritySortList) {
     return (String obj1, String obj2) -> {
 
@@ -25,15 +30,15 @@ public class WeaselComparators {
       }
 
       Optional var1 = prioritySortList
-              .stream()
-              .map(ConfigStringElement::toString)
-              .filter(obj1::equals)
-              .findFirst();
+          .stream()
+          .map(ConfigStringElement::toString)
+          .filter(obj1::equals)
+          .findFirst();
       Optional var2 = prioritySortList
-              .stream()
-              .map(ConfigStringElement::toString)
-              .filter(obj2::equals)
-              .findFirst();
+          .stream()
+          .map(ConfigStringElement::toString)
+          .filter(obj2::equals)
+          .findFirst();
 
       boolean containsObj1 = var1.isPresent();
       boolean containsObj2 = var2.isPresent();
@@ -56,6 +61,12 @@ public class WeaselComparators {
     };
   }
 
+  /**
+   *
+   * The compares compare the object
+   *
+   * @return
+   */
   public static Comparator<Object> getComparatorWithAlphabeticalOrder() {
     return (Object obj1, Object obj2) -> {
       if (obj1 == obj2) {
@@ -68,7 +79,7 @@ public class WeaselComparators {
         return 1;
       }
       return obj1.toString().toLowerCase()
-              .compareTo(obj2.toString().toLowerCase());
+          .compareTo(obj2.toString().toLowerCase());
 
     };
   }

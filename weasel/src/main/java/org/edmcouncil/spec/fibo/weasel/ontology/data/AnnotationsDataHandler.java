@@ -40,6 +40,13 @@ public class AnnotationsDataHandler {
   @Autowired
   private AppConfiguration appConfig;
 
+  /**
+   * This method collects handle Annotations.
+   *
+   * @param iri ElementIri is used to identify for the given ontology.
+   * @param ontology Actions will be performed for the given ontology.
+   * @return
+   */
   public OwlDetailsProperties<PropertyValue> handleAnnotations(IRI iri, OWLOntology ontology) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();
 
@@ -77,6 +84,12 @@ public class AnnotationsDataHandler {
     return result;
   }
 
+  /**
+   * This method collects handle Ontology Annotations.
+   *
+   * @param annotations
+   * @return Ontology Annottions in the appropriate data structure.
+   */
   public OwlDetailsProperties<PropertyValue> handleOntologyAnnotations(Stream<OWLAnnotation> annotations) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();
 
@@ -115,6 +128,11 @@ public class AnnotationsDataHandler {
     return result;
   }
 
+  /**
+   *
+   * @param opv PropertyValue
+   * @param value
+   */
   private void checkUriAsIri(PropertyValue opv, String value) {
     //TODO: Change this to more pretty solution
     if (opv.getType() == WeaselOwlType.ANY_URI) {

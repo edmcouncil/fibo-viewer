@@ -71,14 +71,13 @@ public class OwlDataHandler {
   private AnnotationsDataHandler annotationsDataHandler;
   @Autowired
   private IndividualDataHandler individualDataHandler;
-  
+
   /**
-   * 
+   *
    * @param iri Iri is used to identify for the given ontology.
    * @param ontology Actions will be performed for the given ontology.
    * @return OwlListDetails
    */
-
   public OwlListDetails handleParticularClass(IRI iri, OWLOntology ontology) {
     OwlListDetails resultDetails = new OwlListDetails();
     Iterator<OWLClass> classesIterator = ontology.classesInSignature().iterator();
@@ -204,7 +203,7 @@ public class OwlDataHandler {
    * @param subElements
    * @param objIri objIri is used to identify for the given ontology.
    * @param ontology Actions will be performed for the given ontology.
-   * @param type 
+   * @param type
    * @return Taxonomy in the appropriate data structure.
    */
   private OwlTaxonomyImpl extractTaxonomy(List<PropertyValue> subElements, IRI objIri, OWLOntology ontology, WeaselOwlType type) {
@@ -251,13 +250,13 @@ public class OwlDataHandler {
   }
 
   /**
-   * 
+   *
+   *
    * @param ontology Actions will be performed for the given ontology.
-   * @param sci sci is used to identify for the given 
+   * @param sci sci is used to identify for the given
    * @param type
-   * @return OWLEntity 
+   * @return OWLEntity
    */
-  
   private OWLEntity createEntity(OWLOntology ontology, IRI sci, WeaselOwlType type) {
 
     switch (type) {
@@ -324,10 +323,9 @@ public class OwlDataHandler {
   }
 
   /**
-   * This method compare iri to
    *
    * @param axiom
-   * @param iriFragment 
+   * @param iriFragment
    * @param opv
    * @return
    *
@@ -394,6 +392,14 @@ public class OwlDataHandler {
     opv.setValue(String.join(" ", splited));
   }
 
+  /**
+   *
+   * @param value
+   * @param iriFragment iriFragment is the last part of the iri address.
+   * @param splitFragment splitFragment is the entire string of the last fragment iri.
+   * @param fixRenderedIri
+   * @return
+   */
   private String fixRenderedValue(String value, String iriFragment, String splitFragment, Boolean fixRenderedIri) {
     String[] split = value.split(" ");
     if (split[1].equals("SubClassOf")) {
@@ -547,15 +553,14 @@ public class OwlDataHandler {
 
     return resultProperties;
   }
-  
+
   /**
-   * 
-   * @param ontology  Actions will be performed for the given ontology.
+   *
+   * @param ontology Actions will be performed for the given ontology.
    * @param subType subType is the type by which the axioms will be collected.
    * @param entity
-   * @return 
+   * @return
    */
-
   private List<PropertyValue> getSubclasses(OWLOntology ontology, AxiomType<OWLSubClassOfAxiom> subType, OWLEntity entity) {
     List<PropertyValue> result = new LinkedList<>();
     ontology.axioms(subType)
@@ -651,7 +656,7 @@ public class OwlDataHandler {
    * ontology.
    *
    * @param ontology Actions will be performed for the given ontology.
-   * @param clazz Inherited Axioms are searched for the class. 
+   * @param clazz Inherited Axioms are searched for the class.
    * @return Inherited Axiom in the appropriate data structure.
    */
   private OwlDetailsProperties<PropertyValue> handleInheritedAxioms(OWLOntology ontology, OWLClass clazz) {

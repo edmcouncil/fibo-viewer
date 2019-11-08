@@ -23,11 +23,12 @@ import org.springframework.stereotype.Component;
 public class IndividualDataHandler {
 
   /**
-   * Handle all individual for OWLClass given on parameter.
+   * Handle all individual for OWLClass given on parameter. A reasoner is used. A result function
+   * operation return label and IRI for each Individual. Clazz must appear in the ontology.
    *
-   * @param ontology
-   * @param clazz
-   * @return 
+   * @param ontology Actions will be performed for the given ontology.
+   * @param clazz IndividualData are searched for the class.
+   * @return IndividualData in the appropriate data structure.
    */
   public OwlDetailsProperties<PropertyValue> handleClassIndividuals(OWLOntology ontology, OWLClass clazz) {
     OwlDetailsProperties<PropertyValue> result = new OwlDetailsProperties<>();

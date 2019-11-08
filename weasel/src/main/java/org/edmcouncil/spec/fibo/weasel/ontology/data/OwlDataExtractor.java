@@ -12,6 +12,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class OwlDataExtractor {
 
+  /**
+   * This method extract Annotation Type.
+   *
+   * @param next
+   * @return
+   */
   public WeaselOwlType extractAnnotationType(OWLAnnotationAssertionAxiom next) {
     if (next.getValue().isIRI()) {
       return WeaselOwlType.IRI;
@@ -30,8 +36,9 @@ public class OwlDataExtractor {
 
   /**
    * This method is used to extract annotation type for ontology.
+   *
    * @param next
-   * @return 
+   * @return
    */
   public WeaselOwlType extractAnnotationType(OWLAnnotation next) {
     if (next.getValue().isIRI()) {
@@ -49,10 +56,5 @@ public class OwlDataExtractor {
     return WeaselOwlType.OTHER;
   }
 
-  public String extractAnyUriToString(String anyUri) {
-    String uriString = anyUri.replaceFirst("\"", "");
-    uriString = uriString.substring(0, uriString.length()-13);
-    return uriString;
-}
-  }
 
+}

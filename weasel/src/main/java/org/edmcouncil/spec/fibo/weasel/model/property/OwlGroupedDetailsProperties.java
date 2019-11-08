@@ -29,6 +29,13 @@ public class OwlGroupedDetailsProperties<T> {
     properties = new HashMap<>();
   }
 
+  /**
+   * This method add Property.
+   *
+   * @param groupKey
+   * @param propertyKey
+   * @param property
+   */
   public void addProperty(String groupKey, String propertyKey, T property) {
     if (this.properties == null) {
       this.properties = new HashMap<>();
@@ -71,8 +78,9 @@ public class OwlGroupedDetailsProperties<T> {
     });
     properties = result;*/
   }
+
   //TODO: The same as up
-   public void sort(Set<ConfigElement> groups) {
+  public void sort(Set<ConfigElement> groups) {
 
   }
 
@@ -105,8 +113,12 @@ public class OwlGroupedDetailsProperties<T> {
     return true;
   }
 
- 
-
+  /**
+   * This method sort all elements.
+   *
+   * @param groups
+   * @param cfg
+   */
   public void sort(Set<ConfigElement> groups, WeaselConfiguration cfg) {
 
     Map<String, Map<String, List<T>>> sortedResults = new LinkedHashMap<>();
@@ -124,7 +136,7 @@ public class OwlGroupedDetailsProperties<T> {
 
       List<ConfigStringElement> priotityList = new LinkedList(group.getElements());
       if (cfg.hasRenamedGroups()) {
-      List<ConfigStringElement> priotityListRenamed = new LinkedList();
+        List<ConfigStringElement> priotityListRenamed = new LinkedList();
         for (ConfigStringElement object : priotityList) {
           String configElement = object.toString();
           String newName = cfg.getNewName(configElement);

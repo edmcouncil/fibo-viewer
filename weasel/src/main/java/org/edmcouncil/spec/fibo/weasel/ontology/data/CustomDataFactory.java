@@ -11,6 +11,12 @@ import org.edmcouncil.spec.fibo.weasel.utils.StringUtils;
  */
 public class CustomDataFactory {
 
+  /**
+   * This method create Annotation IRI.
+   * 
+   * @param iri IRI is used to identify for the given ontology.
+   * @return owlAnnotaionIri
+   */
   public static OwlAnnotationIri createAnnotationIri(String iri) {
     String fragment = StringUtils.getFragment(iri);
     OwlAnnotationIri owlAnnotationIri = new OwlAnnotationIri();

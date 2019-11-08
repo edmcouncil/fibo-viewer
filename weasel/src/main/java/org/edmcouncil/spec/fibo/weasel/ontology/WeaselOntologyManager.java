@@ -179,6 +179,13 @@ public class WeaselOntologyManager {
     return ontology;
   }
 
+  /**
+   * This method collects Details by IRI of the given class.
+   *
+   * @param <T>
+   * @param iriString IRI is used to identify for the given ontology.
+   * @return Details in the appropriate data structure.
+   */
   public <T extends OwlDetails> T getDetailsByIri(String iriString) {
     IRI iri = IRI.create(iriString);
     OwlListDetails result = null;
@@ -239,6 +246,13 @@ public class WeaselOntologyManager {
     return (T) result;
   }
 
+  /**
+   * This method group details.
+   *
+   * @param owlDetails Details by IRI of the given class.
+   * @param cfg
+   * @return Grouped details.
+   */
   private OwlGroupedDetails groupDetails(OwlListDetails owlDetails, WeaselConfiguration cfg) {
     OwlGroupedDetails newResult = null;
     OwlGroupedDetails groupedDetails = new OwlGroupedDetails();
@@ -268,6 +282,13 @@ public class WeaselOntologyManager {
     return newResult;
   }
 
+  /**
+   * This method collects group name.
+   *
+   * @param groups
+   * @param propertyKey
+   * @return
+   */
   private String getGroupName(Set<ConfigElement> groups, String propertyKey) {
     String result = null;
     if (propertyKey == null || propertyKey.isEmpty()) {
@@ -284,6 +305,11 @@ public class WeaselOntologyManager {
     return result;
   }
 
+  /**
+   * This method sort properties.
+   *
+   * @param result
+   */
   private void sortResults(OwlListDetails result) {
     Set set = (Set) config.getWeaselConfig()
         .getConfigVal(WeaselConfigKeys.PRIORITY_LIST);

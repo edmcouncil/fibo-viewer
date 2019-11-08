@@ -157,15 +157,13 @@ public class FiboDataHandler {
     return domainIri;
   }
 
-  
-  
   /**
    * This method collects metadata of the given class.
+   *
    * @param iri Iri is used to identify for the given ontology.
    * @param ontology Actions will be performed for the given ontology.
    * @return metadata
    */
-  
   public OwlDetailsProperties<PropertyValue> handleFiboOntologyMetadata(IRI iri, OWLOntology ontology) {
     OWLOntologyManager manager = ontology.getOWLOntologyManager();
     OwlDetailsProperties<PropertyValue> annotations = null;
@@ -185,6 +183,12 @@ public class FiboDataHandler {
     return annotations;
   }
 
+  /**
+   * This method is collect the All ModulesData.
+   *
+   * @param ontology Actions will be performed for the given ontology.
+   * @return
+   */
   public List<FiboModule> getAllModulesData(OWLOntology ontology) {
     if (modules != null) {
       return modules;
@@ -229,6 +233,12 @@ public class FiboDataHandler {
     return result;
   }
 
+  /**
+   *
+   * @param modulesIriSet
+   * @param ontology Actions will be performed for the given ontology.
+   * @return
+   */
   private List<String> getRootModulesIris(Set<String> modulesIriSet, OWLOntology ontology) {
     Map<String, Integer> referenceCount = new LinkedHashMap<>();
     modulesIriSet.forEach((mIri) -> {
@@ -248,6 +258,11 @@ public class FiboDataHandler {
     return rootModulesIris;
   }
 
+  /**
+   * This method load all Ontology Resources.
+   *
+   * @param ontology Actions will be performed for the given ontology.
+   */
   private void loadAllOntologyResources(OWLOntology ontology) {
     OWLOntologyManager manager = ontology.getOWLOntologyManager();
     Map<String, OntologyResources> allResources = new HashMap<>();
@@ -262,6 +277,12 @@ public class FiboDataHandler {
     resources = allResources;
   }
 
+  /**
+   * This method extract Ontology Resources.
+   *
+   * @param owlOntology
+   * @return Ontology Resources in the appropriate data structure.
+   */
   private OntologyResources extractOntologyResources(OWLOntology owlOntology) {
     OntologyResources ontoResources = new OntologyResources();
     IRI ontologyIri = owlOntology.getOntologyID().getOntologyIRI().get();
@@ -313,6 +334,12 @@ public class FiboDataHandler {
     return resources.get(iri);
   }
 
+  /**
+   *
+   * @param iri ElementIri is used to identify for the given ontology.
+   * @param ontology Actions will be performed for the given ontology.
+   * @return
+   */
   public Set<String> getHasPartElements(IRI iri, OWLOntology ontology) {
 
     OWLDataFactory dataFactory = OWLManager.getOWLDataFactory();
@@ -354,6 +381,12 @@ public class FiboDataHandler {
 
   }
 
+  /**
+   *
+   * @param moduleIri
+   * @param ontology Actions will be performed for the given ontology.
+   * @return
+   */
   private List<FiboModule> getSubModules(String moduleIri, OWLOntology ontology) {
     List<FiboModule> result = new LinkedList<>();
 
@@ -378,19 +411,19 @@ public class FiboDataHandler {
   }
 
   /**
-   *This method is collect the path to the module in which it is located.
-   * 
-   * @param elementIri IRI element to which path we want to find
+   * This method is collect the path to the module in which it is located.
+   *
+   * @param elementIri IRI element to which path we want to find.
    * @param ontology
    * @return Returns the path to the module in which it is located, empty list if element not
-   * present in modules
+   * present in modules.
    */
   public List<String> getElementLocationInModules(String elementIri, OWLOntology ontology) {
     List<String> result = new LinkedList<>();
     if (resources == null) {
       loadAllOntologyResources(ontology);
     }
-    if(modules == null){
+    if (modules == null) {
       getAllModulesData(ontology);
     }
     String ontologyIri = findElementInOntology(elementIri);
@@ -411,11 +444,10 @@ public class FiboDataHandler {
 
   /**
    * This method find elements by iri.
-   * 
+   *
    * @param elementIri ElementIri is used to identify for the given ontology.
    * @return ontology iri where the element is present
    */
-  
   private String findElementInOntology(String elementIri) {
 
     String ontologyIri = null;
@@ -438,6 +470,14 @@ public class FiboDataHandler {
     return ontologyIri;
   }
 
+  /**
+   *
+   * @param node
+   * @param ontologyIri OntologyIri is used to identify for the given ontology.
+   * @param track
+   * @param elementIri ElementIri is used to identify for the given ontology.
+   * @return
+   */
   private Boolean trackingThePath(FiboModule node, String ontologyIri, List<String> track, String elementIri) {
 
     if (node == null) {
@@ -448,7 +488,7 @@ public class FiboDataHandler {
       track.add(node.getIri());
       return true;
     }
-    
+
     if (node.getIri().equals(ontologyIri)) {
       track.add(node.getIri());
       return true;
