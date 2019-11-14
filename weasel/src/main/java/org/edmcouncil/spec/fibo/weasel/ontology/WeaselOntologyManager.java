@@ -166,6 +166,12 @@ public class WeaselOntologyManager {
     return result;
   }
 
+  /**
+   * This method return File Extension.
+   *
+   * @param file
+   * @return
+   */
   private static String getFileExtension(File file) {
     String fileName = file.getName();
     if (fileName.lastIndexOf(".") != -1 && fileName.lastIndexOf(".") != 0) {
@@ -306,18 +312,18 @@ public class WeaselOntologyManager {
   }
 
   /**
-   * This method sort properties.
+   * This method sort by list from the configuration file or by alphabetical order.
    *
-   * @param result
+   * @param data
    */
-  private void sortResults(OwlListDetails result) {
+  private void sortResults(OwlListDetails data) {
     Set set = (Set) config.getWeaselConfig()
         .getConfigVal(WeaselConfigKeys.PRIORITY_LIST);
     if (set == null) {
       return;
     }
     List prioritySortList = new LinkedList();
-    result.sortProperties(prioritySortList);
+    data.sortProperties(prioritySortList);
   }
 
   public List<FiboModule> getAllModulesData() {

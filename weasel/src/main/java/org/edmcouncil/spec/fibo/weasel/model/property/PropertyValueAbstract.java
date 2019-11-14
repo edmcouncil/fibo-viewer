@@ -4,6 +4,8 @@ import org.edmcouncil.spec.fibo.weasel.model.PropertyValue;
 import org.edmcouncil.spec.fibo.weasel.model.WeaselOwlType;
 
 /**
+ * The class stores the Property Value.
+ * 
  * @author Michał Daniel (michal.daniel@makolab.com)
  */
 public abstract class PropertyValueAbstract<T> implements PropertyValue<T> {

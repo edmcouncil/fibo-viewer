@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *
+ * The class stores the value of the axioms.
+ *
  * @author Michał Daniel (michal.daniel@makolab.com)
  */
 public class OwlAxiomPropertyValue extends PropertyValueAbstract<String> {

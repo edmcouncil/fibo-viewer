@@ -7,6 +7,7 @@ import java.util.Map;
 import org.edmcouncil.spec.fibo.weasel.model.PropertyValue;
 
 /**
+ * 
  * @author Michał Daniel (michal.daniel@makolab.com)
  */
 public class OntologyResources {
