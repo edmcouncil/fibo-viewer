@@ -6,7 +6,7 @@
 
   <groupId>org.edmcouncil.spec</groupId>
   <artifactId>fibo</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>v0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>FIBO Viewer Project</name>
@@ -27,8 +27,8 @@
   </properties>
 
   <modules>
-    <module>view</module>
-    <module>config</module>
-    <module>weasel</module>
+    <module>web-app</module>
+    <module>viewer-core</module>
+    <module>config-loader</module>
   </modules>
 </project>

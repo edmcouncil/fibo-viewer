@@ -194,3 +194,5 @@ nbdist/
 nbactions.xml
 
 # End of https://www.gitignore.io/api/java,eclipse,netbeans,intellij,java-web
+/weasel/nbproject/
+*/catalog-v001.xml
