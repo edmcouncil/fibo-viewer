@@ -7,7 +7,7 @@ import java.util.Set;
  *
  * @author Michał Daniel (michal.daniel@makolab.com)
  */
-public class ViewerGraph {
+public class OntologyGraph {
 
   private Set<GraphNode> nodes;
   private Set<GraphRelation> relations;

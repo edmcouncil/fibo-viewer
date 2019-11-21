@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphNode;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphNodeType;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphRelation;
-import org.edmcouncil.spec.fibo.weasel.model.graph.ViewerGraph;
+import org.edmcouncil.spec.fibo.weasel.model.graph.OntologyGraph;
 import org.edmcouncil.spec.fibo.weasel.ontology.data.extractor.OwlDataExtractor;
 import org.edmcouncil.spec.fibo.weasel.ontology.data.label.provider.LabelProvider;
 import org.semanticweb.owlapi.model.ClassExpressionType;
@@ -65,7 +65,7 @@ public class OntologyVisitors {
     };
   }
 
-  public final OWLObjectVisitorEx<Map<GraphNode, OWLClassExpression>> superClassAxiom(ViewerGraph vg, GraphNode node, GraphNodeType type) {
+  public final OWLObjectVisitorEx<Map<GraphNode, OWLClassExpression>> superClassAxiom(OntologyGraph vg, GraphNode node, GraphNodeType type) {
 
     return new OWLObjectVisitorEx() {
 

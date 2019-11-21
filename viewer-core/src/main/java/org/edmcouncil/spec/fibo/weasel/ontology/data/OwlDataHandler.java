@@ -31,7 +31,7 @@ import org.edmcouncil.spec.fibo.config.configuration.model.AppConfiguration;
 import org.edmcouncil.spec.fibo.config.configuration.model.PairImpl;
 import org.edmcouncil.spec.fibo.weasel.model.module.FiboModule;
 import org.edmcouncil.spec.fibo.weasel.model.PropertyValue;
-import org.edmcouncil.spec.fibo.weasel.model.graph.ViewerGraph;
+import org.edmcouncil.spec.fibo.weasel.model.graph.OntologyGraph;
 import org.edmcouncil.spec.fibo.weasel.model.graph.ViewerGraphJson;
 import org.edmcouncil.spec.fibo.weasel.model.property.OwlAxiomPropertyEntity;
 import org.edmcouncil.spec.fibo.weasel.model.property.OwlAxiomPropertyValue;
@@ -110,7 +110,7 @@ public class OwlDataHandler {
         OwlDetailsProperties<PropertyValue> individuals = handleParticularIndividual(ontology, clazz);
         OwlDetailsProperties<PropertyValue> inheritedAxioms = handleInheritedAxioms(ontology, clazz);
 
-        ViewerGraph vg = graphDataHandler.handleGraph(clazz, ontology);
+        OntologyGraph vg = graphDataHandler.handleGraph(clazz, ontology);
 
         subclasses = filterSubclasses(subclasses);
 
@@ -154,7 +154,7 @@ public class OwlDataHandler {
       OwlDetailsProperties<PropertyValue> directSubclasses,
       OwlDetailsProperties<PropertyValue> individuals,
       OwlDetailsProperties<PropertyValue> inheritedAxioms,
-      ViewerGraph vg,
+      OntologyGraph vg,
       List<PropertyValue> subclasses) {
     axioms.getProperties().put(subClassOfIriString, subclasses);
 

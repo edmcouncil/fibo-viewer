@@ -9,7 +9,7 @@ public class ViewerGraphJson {
   private String nodes;
   private String edges;
 
-  public ViewerGraphJson(ViewerGraph vg) {
+  public ViewerGraphJson(OntologyGraph vg) {
     this.nodes = vg.toJsonListNodes();
     this.edges = vg.toJsonListEdges();
   }
