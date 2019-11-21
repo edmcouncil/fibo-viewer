@@ -80,8 +80,7 @@ public class OwlGroupedDetailsProperties<T> {
   }
 
   //TODO: The same as up
-
-   public void sort(Set<ConfigItem> groups) {
+  public void sort(Set<ConfigItem> groups) {
 
   }
 
@@ -114,16 +113,12 @@ public class OwlGroupedDetailsProperties<T> {
     return true;
   }
 
-
   /**
    * This method sort all elements.
    *
    * @param groups
    * @param cfg
    */
-
- 
-
   public void sort(Set<ConfigItem> groups, ViewerCoreConfiguration cfg) {
 
     Map<String, Map<String, List<T>>> sortedResults = new LinkedHashMap<>();
@@ -139,22 +134,7 @@ public class OwlGroupedDetailsProperties<T> {
 
       Map<String, List<T>> newprop = new LinkedHashMap();
 
-//<<<<<<< HEAD:weasel/src/main/java/org/edmcouncil/spec/fibo/weasel/model/property/OwlGroupedDetailsProperties.java
-//      List<ConfigStringElement> priotityList = new LinkedList(group.getElements());
-//      if (cfg.hasRenamedGroups()) {
-//        List<ConfigStringElement> priotityListRenamed = new LinkedList();
-//        for (ConfigStringElement object : priotityList) {
-//          String configElement = object.toString();
-//          String newName = cfg.getNewName(configElement);
-//          newName = newName == null ? configElement : newName;
-//          priotityListRenamed.add(new ConfigStringElement(newName));
-//        }
-//        priotityList = priotityListRenamed;
-//      }
-
-//=======
       List<StringItem> priotityList = new LinkedList(group.getElements());
-//>>>>>>> develop:viewer-core/src/main/java/org/edmcouncil/spec/fibo/weasel/model/property/OwlGroupedDetailsProperties.java
       Comparator<String> comparator = WeaselComparators.getComparatorWithPriority(priotityList);
       SortedSet<String> keys = new TreeSet<>(comparator);
       keys.addAll(prop.keySet());

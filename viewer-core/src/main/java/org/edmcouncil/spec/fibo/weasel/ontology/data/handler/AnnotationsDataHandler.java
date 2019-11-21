@@ -103,9 +103,9 @@ public class AnnotationsDataHandler {
   /**
    * This method collects handle Ontology Annotations.
    *
-   * @param annotations Stream of OWL abbotations
-   * @param ontology Loaded ontology
-   * @param details qName is added to this object if found
+   * @param annotations Stream of OWL abbotations.
+   * @param ontology Loaded ontology.
+   * @param details qName is added to this object if found.
    * @return Ontology Annottions in the appropriate data structure.
    */
   public OwlDetailsProperties<PropertyValue> handleOntologyAnnotations(Stream<OWLAnnotation> annotations, OWLOntology ontology, OwlListDetails details) {

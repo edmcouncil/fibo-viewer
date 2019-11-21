@@ -74,7 +74,7 @@ public class OntologyManager {
   }
 
   /**
-   * This method is used to load ontology from file
+   * This method is used to load ontology from file.
    *
    * @param ontoPath OntoPath is the access path from which the ontology is being loaded.
    */
@@ -94,10 +94,6 @@ public class OntologyManager {
     LOG.debug("load ontology from document");
     OWLOntology o = m.loadOntologyFromOntologyDocument(inputOntologyFile);
     
-    //OWLImportsDeclaration importDeclaration = m.getOWLDataFactory()
-     //   .getOWLImportsDeclaration(IRI.create(OWL_ONTOLOGY));
-
-    //m.applyChange(new AddImport(o, importDeclaration));
 
     IRI fiboIRI = IRI.create("https://spec.edmcouncil.org/fibo/ontologyAboutFIBOProd/");
     LOG.debug("load import request");
@@ -114,7 +110,7 @@ public class OntologyManager {
   }
 
   /**
-   * This method is used to load ontology from URL
+   * This method is used to load ontology from URL.
    *
    * @param ontoURL OntoUrl is the web address from which the ontology is being loaded.
    * @return set of ontology
@@ -148,7 +144,7 @@ public class OntologyManager {
   }
 
   /**
-   * This method is used to open all Ontologies from directory
+   * This method is used to open all Ontologies from directory.
    *
    * @param ontologiesDir OntologiesDir is a loaded ontology file.
    * @param manager Manager loading and acessing ontologies.
@@ -212,3 +208,4 @@ public class OntologyManager {
   }
 
 }
+

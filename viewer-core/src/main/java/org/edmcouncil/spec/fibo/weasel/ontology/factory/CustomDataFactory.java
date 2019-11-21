@@ -24,8 +24,8 @@ public class CustomDataFactory {
 
   /**
    * 
-   * @param iri IRI element for which we create annotationIRI
-   * @return AnnotationIri contains iri and label
+   * @param iri IRI element for which we create annotationIRI.
+   * @return AnnotationIri contains iri and label.
    */
   public OwlAnnotationIri createAnnotationIri(String iri) {
     LOG.debug("[Custom Data Factory] Create annotation for iri: {}", iri);

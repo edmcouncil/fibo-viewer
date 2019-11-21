@@ -182,17 +182,15 @@ public class FiboDataHandler {
     return domainIri;
   }
 
-
   /**
    * This method collects metadata of the given class.
    *
    * @param iri Iri is used to identify for the given ontology.
    * @param ontology Actions will be performed for the given ontology.
    * @param details
-   * 
+   *
    * @return metadata
    */
-  
   public OwlDetailsProperties<PropertyValue> handleFiboOntologyMetadata(IRI iri, OWLOntology ontology, OwlListDetails details) {
     OWLOntologyManager manager = ontology.getOWLOntologyManager();
     OwlDetailsProperties<PropertyValue> annotations = null;
@@ -264,6 +262,7 @@ public class FiboDataHandler {
   }
 
   /**
+   
    *
    * @param modulesIriSet
    * @param ontology Actions will be performed for the given ontology.
@@ -307,14 +306,12 @@ public class FiboDataHandler {
     resources = allResources;
   }
 
-//<<<<<<< HEAD:weasel/src/main/java/org/edmcouncil/spec/fibo/weasel/ontology/data/FiboDataHandler.java
   /**
    * This method extract Ontology Resources.
    *
    * @param owlOntology
    * @return Ontology Resources in the appropriate data structure.
    */
-
   private OntologyResources extractOntologyResources(OWLOntology selectedOntology) {
     OntologyResources ontoResources = new OntologyResources();
     IRI ontologyIri = selectedOntology.getOntologyID().getOntologyIRI().get();
@@ -485,7 +482,7 @@ public class FiboDataHandler {
    * This method find elements by iri.
    *
    * @param elementIri ElementIri is used to identify for the given ontology.
-   * @return ontology iri where the element is present
+   * @return Ontology iri where the element is present.
    */
   private String findElementInOntology(String elementIri) {
 

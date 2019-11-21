@@ -59,13 +59,7 @@ public class OwlDataExtractor {
   }
 
 
-//  public String extractAnyUriToString(String anyUri) {
-//    String uriString = anyUri.replaceFirst("\"", "");
-//    uriString = uriString.substring(0, uriString.length() - 13);
-//    return uriString;
-//  }
-
-  public static String extrackAxiomPropertyIri(OWLRestriction someValuesFromAxiom) {
+  public static String extractAxiomPropertyIri(OWLRestriction someValuesFromAxiom) {
     String propertyIri = null;
     for (OWLEntity oWLEntity : someValuesFromAxiom.getProperty().signature().collect(Collectors.toList())) {
       propertyIri = oWLEntity.toStringID();

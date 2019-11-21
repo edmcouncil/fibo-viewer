@@ -16,10 +16,8 @@ public class WeaselComparators {
    * @param prioritySortList
    * @return
    */
-//  public static Comparator<String> getComparatorWithPriority(List<ConfigStringElement> prioritySortList) {
-//=======
+
   public static Comparator<String> getComparatorWithPriority(List<StringItem> prioritySortList) {
-//>>>>>>> develop:viewer-core/src/main/java/org/edmcouncil/spec/fibo/weasel/comparator/WeaselComparators.java
     return (String obj1, String obj2) -> {
 
       if (obj1 == obj2) {
@@ -33,17 +31,8 @@ public class WeaselComparators {
       }
 
       Optional var1 = prioritySortList
-//<<<<<<< HEAD:weasel/src/main/java/org/edmcouncil/spec/fibo/weasel/comparator/WeaselComparators.java
-//          .stream()
-//          .map(ConfigStringElement::toString)
-//          .filter(obj1::equals)
-//          .findFirst();
-//      Optional var2 = prioritySortList
-//          .stream()
-//          .map(ConfigStringElement::toString)
-//          .filter(obj2::equals)
-//          .findFirst();
-//=======
+
+
               .stream()
               .map(StringItem::toString)
               .filter(obj1::equals)
@@ -53,7 +42,6 @@ public class WeaselComparators {
               .map(StringItem::toString)
               .filter(obj2::equals)
               .findFirst();
-//>>>>>>> develop:viewer-core/src/main/java/org/edmcouncil/spec/fibo/weasel/comparator/WeaselComparators.java
 
       boolean containsObj1 = var1.isPresent();
       boolean containsObj2 = var2.isPresent();
