@@ -69,7 +69,6 @@ public class GraphNode extends GraphElement {
         //.append(optionalVar)
         .append(outIri)
         .append("}");
-        
     
     return sb.toString();
   }
