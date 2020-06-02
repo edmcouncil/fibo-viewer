@@ -1,21 +1,25 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
 
+## [0.2.0] - 2020-06-02
 ### Added
 - handle dataproperties annotaions
 - load default ontologies (dcterms, owl, rdf-schema, rdf-syntax, skos, fibo-glosary) from resource folder in application
 - full configurable searcher
 - specially endpoint for hints
+- mark not released resources(PR#40)
+- displaying OWLDataExactCardinality in graph
+- displaying Annotation Property
+- create rest api documentation(api-doc/rest_api.md)
 
 ### Changed
-- displaying OWLDataExactCardinality in graph
-- graph in json being returned in string value
 - changing the storing and returning graph value from generating string to objects
+- small changes in config file structure
+- change graph returned structures(more info in directory api-doc/graph.md )
 
 ### Removed
-- 
+- deprecated methods in fibo data handler
 
 
 ## [0.1.0] - 2019-11-08
