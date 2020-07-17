@@ -2,6 +2,7 @@ package org.edmcouncil.spec.fibo.weasel.ontology.data;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphNode;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphNodeType;
@@ -146,12 +147,14 @@ public class RestrictionGraphDataHandler {
       if (isRestriction && axiom.getAxiomType().equals(AxiomType.SUBCLASS_OF)) {
         OWLSubClassOfAxiom axiomEl = axiom.accept(ontologyVisitors.getAxiomElement(elementIri));
 
-        Map<GraphNode, OWLClassExpression> qrestrictions = axiomEl.getSuperClass()
+        Map<GraphNode, Set<OWLClassExpression>> qrestrictions = axiomEl.getSuperClass()
                 .accept(ontologyVisitors.superClassAxiom(vg, root, type));
 
         if (qrestrictions != null && !qrestrictions.isEmpty()) {
-          for (Map.Entry<GraphNode, OWLClassExpression> entry : qrestrictions.entrySet()) {
-            handleRecursivelyRestrictions(entry.getValue(), vg, entry.getKey(), type);
+          for (Map.Entry<GraphNode, Set<OWLClassExpression>> entry : qrestrictions.entrySet()) {
+            for (OWLClassExpression classExpression : entry.getValue()) {
+              handleRecursivelyRestrictions(classExpression, vg, entry.getKey(), type);
+            }
           }
         }
       }
@@ -172,12 +175,15 @@ public class RestrictionGraphDataHandler {
       return;
     }
 
-    Map<GraphNode, OWLClassExpression> expressionsMap = expression
+    Map<GraphNode, Set<OWLClassExpression>> expressionsMap = expression
             .accept(ontologyVisitors.superClassAxiom(vg, root, type));
 
     if (expressionsMap != null && !expressionsMap.isEmpty()) {
       expressionsMap.entrySet().forEach((entry) -> {
-        handleRecursivelyRestrictions(entry.getValue(), vg, entry.getKey(), type);
+        for (OWLClassExpression classExpression : entry.getValue()) {
+          handleRecursivelyRestrictions(classExpression, vg, entry.getKey(), type);
+        }
+        
       });
     }
   }

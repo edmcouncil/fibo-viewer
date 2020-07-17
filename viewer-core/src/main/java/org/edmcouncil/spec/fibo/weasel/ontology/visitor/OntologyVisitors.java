@@ -1,7 +1,9 @@
 package org.edmcouncil.spec.fibo.weasel.ontology.visitor;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphNode;
 import org.edmcouncil.spec.fibo.weasel.model.graph.GraphNodeType;
@@ -51,7 +53,7 @@ public class OntologyVisitors {
   private LabelProvider labelExtractor;
 
   public final OWLObjectVisitorEx<Boolean> isRestrictionVisitor
-          = new OWLObjectVisitorEx<Boolean>() {
+      = new OWLObjectVisitorEx<Boolean>() {
     @Override
     public Boolean visit(OWLSubClassOfAxiom subClassAxiom) {
       OWLClassExpression superClass = subClassAxiom.getSuperClass();
@@ -72,17 +74,17 @@ public class OntologyVisitors {
     };
   }
 
-  public final OWLObjectVisitorEx<Map<GraphNode, OWLClassExpression>> superClassAxiom(OntologyGraph vg, GraphNode node, GraphNodeType type) {
+  public final OWLObjectVisitorEx<Map<GraphNode, Set<OWLClassExpression>>> superClassAxiom(OntologyGraph vg, GraphNode node, GraphNodeType type) {
 
     return new OWLObjectVisitorEx() {
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLObjectSomeValuesFrom someValuesFromAxiom) {
-
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLObjectSomeValuesFrom someValuesFromAxiom) {
+        LOG.debug("visit OWLObjectSomeValuesFrom: {}", someValuesFromAxiom.toString());
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(someValuesFromAxiom);
         ClassExpressionType objectType = someValuesFromAxiom.getFiller().getClassExpressionType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         switch (objectType) {
           case OWL_CLASS:
@@ -129,10 +131,13 @@ public class OntologyVisitors {
             vg.addNode(blankNode);
             vg.addRelation(relSomeVal);
             vg.setRoot(blankNode);
-
-            returnedVal.put(blankNode, someValuesFromAxiom.getFiller());
+            LOG.debug("Union of {}", someValuesFromAxiom.toString());
+            addValue(returnedVal, blankNode, someValuesFromAxiom.getFiller());
             return returnedVal;
 
+          default:
+            LOG.debug("Unsupported expression type {}", objectType);
+            break;
         }
 
         return null;
@@ -145,13 +150,13 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLObjectExactCardinality axiom) {
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLObjectExactCardinality axiom) {
         int cardinality = axiom.getCardinality();
-
+        LOG.debug("visit OWLObjectExactCardinality: {}", axiom.toString());
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         ClassExpressionType objectType = axiom.getFiller().getClassExpressionType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         for (int i = 0; i < cardinality; i++) {
           switch (objectType) {
@@ -199,7 +204,7 @@ public class OntologyVisitors {
               vg.addRelation(relSomeVal);
               vg.setRoot(blankNode);
               vg.setRoot(blankNode);
-              returnedVal.put(blankNode, axiom.getFiller());
+              addValue(returnedVal, blankNode, axiom.getFiller());
               break;
 
             default:
@@ -211,14 +216,14 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLObjectAllValuesFrom axiom) {
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLObjectAllValuesFrom axiom) {
         //int cardinality = axiom.getCardinality();
-        LOG.debug("Object all values from axiom: {}", axiom.toString());
+        LOG.debug("visit OWLObjectAllValuesFrom: {}", axiom.toString());
 
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         ClassExpressionType objectType = axiom.getFiller().getClassExpressionType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         switch (objectType) {
           case OWL_CLASS:
@@ -266,7 +271,7 @@ public class OntologyVisitors {
             vg.addRelation(relSomeVal);
             vg.setRoot(blankNode);
             vg.setRoot(blankNode);
-            returnedVal.put(blankNode, axiom.getFiller());
+            addValue(returnedVal, blankNode, axiom.getFiller());
             break;
           default:
             LOG.debug("Unsupported switch case (ObjectType): " + objectType);
@@ -275,12 +280,12 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLDataSomeValuesFrom axiom) {
-
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLDataSomeValuesFrom axiom) {
+        LOG.debug("visit OWLDataSomeValuesFrom: {}", axiom.toString());
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         DataRangeType objectType = axiom.getFiller().getDataRangeType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         switch (objectType) {
           case DATATYPE:
@@ -311,12 +316,12 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLDataExactCardinality axiom) {
-
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLDataExactCardinality axiom) {
+        LOG.debug("visit OWLDataExactCardinality: {}", axiom.toString());
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         DataRangeType objectType = axiom.getFiller().getDataRangeType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         switch (objectType) {
           case DATATYPE:
@@ -347,7 +352,8 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLObjectMinCardinality axiom) {
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLObjectMinCardinality axiom) {
+        LOG.debug("visit OWLObjectMinCardinality: {}", axiom.toString());
         int cardinality = axiom.getCardinality();
         boolean isOptional = cardinality == 0;
         cardinality = cardinality == 0 ? 1 : cardinality;
@@ -355,7 +361,7 @@ public class OntologyVisitors {
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         ClassExpressionType objectType = axiom.getFiller().getClassExpressionType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         for (int i = 0; i < cardinality; i++) {
           switch (objectType) {
@@ -407,7 +413,7 @@ public class OntologyVisitors {
               vg.addRelation(relSomeVal);
               vg.setRoot(blankNode);
 
-              returnedVal.put(blankNode, axiom.getFiller());
+              addValue(returnedVal, blankNode, axiom.getFiller());
               break;
 
             default:
@@ -419,15 +425,12 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLObjectUnionOf axiom) {
-        //int cardinality = axiom.getCardinality();
-        //boolean isOptional = cardinality == 0;
-        //cardinality = cardinality == 0 ? 1 : cardinality;
-
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLObjectUnionOf axiom) {
+        LOG.debug("visit OWLObjectUnionOf: {}", axiom.toString());
         String propertyIri = null;
         propertyIri = "";
         ClassExpressionType objectType = axiom.getClassExpressionType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
         if (node.getLabel().equals(DEFAULT_BLANK_NODE_LABEL)) {
           switch (objectType) {
             case OWL_CLASS:
@@ -475,7 +478,7 @@ public class OntologyVisitors {
               vg.addRelation(relSomeVal);
               vg.setRoot(blankNode);
 
-              returnedVal.put(blankNode, axiom.getObjectComplementOf());
+              addValue(returnedVal, blankNode, axiom.getObjectComplementOf());
               break;
             case OBJECT_UNION_OF:
 
@@ -489,7 +492,7 @@ public class OntologyVisitors {
                */
 
               for (OWLEntity owlEntity : axiom.signature().collect(Collectors.toList())) {
-                LOG.trace("OWLObjectUnionOf axiom with owl entity {}", owlEntity);
+                LOG.debug("OWLObjectUnionOf axiom with owl entity {}", owlEntity);
                 GraphNode unionNode = new GraphNode(vg.nextId());
                 unionNode.setLabel(labelExtractor.getLabelOrDefaultFragment(owlEntity));
                 unionNode.setIri(owlEntity.getIRI().toString());
@@ -508,12 +511,32 @@ public class OntologyVisitors {
               LOG.debug("Unsupported switch case (ObjectType): {}", objectType);
 
           }
+        } else {
+          LOG.debug("node label is not a default label: {}", node.getLabel());
+          //create OR blank node
+
+          GraphNode blankNode = new GraphNode(vg.nextId());
+          blankNode.setType(type);
+          blankNode.setLabel("or");
+
+          GraphRelation relSomeVal = new GraphRelation(vg.nextId());
+          relSomeVal.setStart(node);
+          relSomeVal.setEnd(blankNode);
+          relSomeVal.setOptional(true);
+          relSomeVal.setEndNodeType(type);
+          vg.addNode(blankNode);
+          vg.addRelation(relSomeVal);
+
+          for (OWLClassExpression classExpression : axiom.getOperandsAsList()) {
+            addValue(returnedVal, blankNode, classExpression);
+          }
         }
         return returnedVal;
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLObjectMaxCardinality axiom) {
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLObjectMaxCardinality axiom) {
+        LOG.debug("visit OWLObjectMaxCardinality: {}", axiom.toString());
         int cardinality = axiom.getCardinality();
         boolean isOptional = cardinality == 1;
         cardinality = cardinality == 0 ? 1 : cardinality;
@@ -521,7 +544,7 @@ public class OntologyVisitors {
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         ClassExpressionType objectType = axiom.getFiller().getClassExpressionType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         for (int i = 0; i < cardinality; i++) {
           switch (objectType) {
@@ -572,7 +595,7 @@ public class OntologyVisitors {
               vg.addRelation(relSomeVal);
               vg.setRoot(blankNode);
               vg.setRoot(blankNode);
-              returnedVal.put(blankNode, axiom.getFiller());
+              addValue(returnedVal, blankNode, axiom.getFiller());
               break;
 
             default:
@@ -584,7 +607,8 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLDataMaxCardinality axiom) {
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLDataMaxCardinality axiom) {
+        LOG.debug("visit OWLDataMaxCardnality: {}", axiom.toString());
         int cardinality = axiom.getCardinality();
         boolean isOptional = cardinality == 1;
         cardinality = cardinality == 0 ? 1 : cardinality;
@@ -592,7 +616,7 @@ public class OntologyVisitors {
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         DataRangeType objectType = axiom.getFiller().getDataRangeType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         for (int i = 0; i < cardinality; i++) {
 
@@ -628,7 +652,8 @@ public class OntologyVisitors {
       }
 
       @Override
-      public Map<GraphNode, OWLClassExpression> visit(OWLDataMinCardinality axiom) {
+      public Map<GraphNode, Set<OWLClassExpression>> visit(OWLDataMinCardinality axiom) {
+        LOG.debug("visit OWLDataMinCardinality: {}", axiom.toString());
         int cardinality = axiom.getCardinality();
         boolean isOptional = cardinality == 0;
         cardinality = cardinality == 0 ? 1 : cardinality;
@@ -636,7 +661,7 @@ public class OntologyVisitors {
         String propertyIri = null;
         propertyIri = OwlDataExtractor.extractAxiomPropertyIri(axiom);
         DataRangeType objectType = axiom.getFiller().getDataRangeType();
-        Map<GraphNode, OWLClassExpression> returnedVal = new HashMap<>();
+        Map<GraphNode, Set<OWLClassExpression>> returnedVal = new HashMap<>();
 
         for (int i = 0; i < cardinality; i++) {
 
@@ -769,5 +794,11 @@ public class OntologyVisitors {
       object = oWLEntity.toStringID();
     }
     return object;
+  }
+
+  private void addValue(Map<GraphNode, Set<OWLClassExpression>> map, GraphNode node, OWLClassExpression expression) {
+    Set<OWLClassExpression> values = map.getOrDefault(node, new HashSet<>());
+    values.add(expression);
+    map.put(node, values);
   }
 }
