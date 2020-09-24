@@ -11,7 +11,7 @@
     <div class="col-6">
       <div class="row">
         <div class="col-12">
-          <form:form method="POST" action="${pageContext.request.contextPath}/search" modelAttribute="query"
+          <form:form method="POST" action="/search" modelAttribute="query"
                      class="ml-2 mr-4" autocomplete="off">
             <div class="input-group custom-search-form">
               <form:input path="value" placeholder="Search ..." id="search-query" 

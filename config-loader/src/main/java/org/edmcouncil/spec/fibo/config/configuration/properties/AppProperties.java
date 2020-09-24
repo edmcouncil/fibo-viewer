@@ -19,15 +19,6 @@ public class AppProperties {
   private String defaultHomePath;
   private String viewerConfigFileName;
   private String defaultOntologyFileName;
-  private String configPath;
-
-  public String getConfigPath() {
-    return configPath;
-  }
-
-  public void setConfigPath(String configPath) {
-    this.configPath = configPath;
-  }
 
   public String getDefaultHomePath() {
     return defaultHomePath;

@@ -17,40 +17,33 @@ import org.xml.sax.SAXException;
  */
 public class ConfigLoader {
 
+  
   private static final Logger LOG = LoggerFactory.getLogger(ConfigLoader.class);
+  
 
-  ViewerCoreConfiguration configuration;
-
-  public ConfigLoader() {
-    this.configuration = new ViewerCoreConfiguration();
-  }
-
-  public void loadWeaselConfiguration(Path weaselConfigFile) {
-
+  public ViewerCoreConfiguration loadWeaselConfiguration(Path weaselConfigFile) {
+    ViewerCoreConfiguration configuration = new ViewerCoreConfiguration();
+    
     SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
     try {
-      File configFile = weaselConfigFile.toFile();
-      if (!configFile.exists()) {
+        File configFile= weaselConfigFile.toFile();
+        if(!configFile.exists()){
 
-        LOG.debug("Configuration file not exist, use default empty configuration.");
-        return;
-      }
-      SAXParser saxParser = saxParserFactory.newSAXParser();
-      ViewerCoreConfigurationHandler handler = new ViewerCoreConfigurationHandler(configuration);
-      saxParser.parse(configFile, handler);
-
-      configuration = handler.getConfiguration();
-
+          LOG.debug("Configuration file not exist, use default empty configuration.");
+          return configuration;
+        }
+        SAXParser saxParser = saxParserFactory.newSAXParser();
+        ViewerCoreConfigurationHandler handler = new ViewerCoreConfigurationHandler();
+        saxParser.parse(configFile, handler);
+        
+        configuration = handler.getConfiguration();
+       
+        
     } catch (ParserConfigurationException | SAXException | IOException e) {
-      LOG.error("Exception while loading configuration: {}", e.getMessage());
+        LOG.error("Exception while loading configuration: {}", e.getMessage());
     }
 
-    return;
-  }
 
-  public ViewerCoreConfiguration getConfiguration() {
     return configuration;
   }
-  
-  
 }

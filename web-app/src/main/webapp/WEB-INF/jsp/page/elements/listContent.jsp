@@ -15,30 +15,10 @@
         <c:forEach items="${result.result}" var="resEl">
           <div class="ml-5">
             <div class="row">
-              <form:form method="POST" action="${pageContext.request.contextPath}/search" modelAttribute="query"
-                         class=" mr-4" autocomplete="off">
-
-                <form:input path="value"  
-                            aria-label="search-item" class="form-control d-none" type="text"
-                            value ="${resEl.iri}" />
-
-                <button  class="btn btn-link p-0 m-0 " type="submit">
-                  <h5 class = "text-primary font-weight-bold  p-0 m-0">  ${resEl.label} </h5>
-                </button>
-              </form:form>
+              <span><h5> <a class="font-weight-bold" href="search?query=${resEl.iri}">${resEl.label}</a> </h5></span>
             </div>
             <div class="row">
-              <form:form method="POST" action="${pageContext.request.contextPath}/search" modelAttribute="query"
-                         class=" mr-4" autocomplete="off">
-
-                <form:input path="value"  
-                            aria-label="search-item" class="form-control d-none" type="text"
-                            value ="${resEl.iri}" />
-
-                <button  class="btn btn-link p-0 m-0 " type="submit">
-                  <span class = "text-secondary p-0 m-0">  ${resEl.iri} </span>
-                </button>
-              </form:form>
+              <span> <a class="text-secondary" href="search?query=${resEl.iri}">${resEl.iri}</a> </span>
             </div>
             <div class="row">
               <span> ${resEl.description} </span>
@@ -123,7 +103,7 @@
                   </c:otherwise>
                 </c:choose>
               </c:when>
-
+                    
               <c:otherwise>
                 <c:forEach begin="1" end="${result.maxPage}" varStatus="loop" var="index">
                   <c:choose>

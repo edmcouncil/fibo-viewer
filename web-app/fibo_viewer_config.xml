@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<properties>
+
+    <!-- To load an ontology from the internet, enter the URL between the <ontologyURL> tags -->
+    <!-- To load an ontology from a folder, enter the path address with application between <ontologyPath> tags or enter the file name  -->
+    <!-- If no URL or path is provided, the program will load the ontology from the default folder -->
+    <ontology>
+        <!--<ontologyURL>https://spec.edmcouncil.org/fibo/ontology/MetadataFIBO/</ontologyURL>
+        <ontologyPath>C:\Users\user\.weasel\AboutFIBOProd.rdf</ontologyPath>
+        <ontologyPath>AboutFIBODev.ttl</ontologyPath>-->
+        <ontologyURL>https://spec.edmcouncil.org/fibo/ontology/master/latest/AboutFIBODev/</ontologyURL>
+        <ontologyURL>https://spec.edmcouncil.org/fibo/ontology/master/latest/MetadataFIBO</ontologyURL>
+        <ontologyDir>ontologies</ontologyDir>
+        <ontologyDir>staticOntologies</ontologyDir>
+        <ontologyMapper>fiboMapper</ontologyMapper>
+    </ontology>
+
+  
+  <ignoreToDisplaying>
+    <ignore>@viewer.axiom.SubObjectPropertyOf</ignore>
+    <ignore>http://www.w3.org/2000/01/rdf-schema#isDefinedBy</ignore>
+    <ignore>http://spec.edmcouncil.org/owlnames#definition</ignore>
+    <ignore>http://spec.edmcouncil.org/owlnames#label</ignore>
+    <ignore>http://spec.edmcouncil.org/owlnames#synonym</ignore>
+    <ignore>http://spec.edmcouncil.org/owlnames#example</ignore>
+    <ignore>http://spec.edmcouncil.org/owlnames#explanatoryNote</ignore>
+  </ignoreToDisplaying>
+       
+  <!-- This is configuration about labels and displaying values -->
+  <labelConfig>
+      
+    <!-- When TRUE - (default) labels will be extracted and displayed, FALSE - displayed IRI fragment's or defined user labels -->
+    <displayLabel>TRUE</displayLabel>
+      
+    <!-- When USER_DEFINED (default) -  rename configuration is more important than labels at group element names, -->
+    <!-- EXTRACTED - labels is more important than other, if present label be put -->
+    <labelPriority>USER_DEFINED</labelPriority>
+      
+    <!-- When TRUE - only labels with given lang be displayed, if language is not present displayed is fragment, -->
+    <!-- FALSE - (default) does not force labels to have a language -->
+    <forceLabelLang>FALSE</forceLabelLang>
+      
+    <!-- When an item has more than one label, the one with the given language will be displayed (default is en) -->
+    <labelLang>en</labelLang>
+      
+    <!-- Define action when label is not forced and entity has more than one label but noone have a language  -->
+    <!-- FRAGMENT - assigns an IRI fragment to the label -->
+    <!-- FIRST - (default) assigns an first element of label list -->
+    <missingLanguageAction>FIRST</missingLanguageAction>
+    
+    <!-- Here we can define some default labels for specific URI -->
+    <userDefaultNameList>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.w3.org/2000/01/rdf-schema#Literal</resourceIriToName>
+        <resourceIriName>literal</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.w3.org/2001/XMLSchema#string</resourceIriToName>
+        <resourceIriName>string</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.omg.org/techprocess/ab/SpecificationMetadata/fileAbbreviation</resourceIriToName>
+        <resourceIriName>file abbreviation</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.omg.org/techprocess/ab/SpecificationMetadata/filename</resourceIriToName>
+        <resourceIriName>file name</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.w3.org/2000/01/rdf-schema#isDefinedBy</resourceIriToName>
+        <resourceIriName>is defined by</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.EquivalentClasses</resourceIriToName>
+        <resourceIriName>Equivalent classes (necessary and sufficient criteria)</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.SubClassOf</resourceIriToName>
+        <resourceIriName>IS-A restrictions</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.DisjointClasses</resourceIriToName>
+        <resourceIriName>Disjoint classes</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.ClassAssertion</resourceIriToName>
+        <resourceIriName>Instance classification</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.SameIndividual</resourceIriToName>
+        <resourceIriName>same as</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.ObjectPropertyAssertion</resourceIriToName>
+        <resourceIriName>Object property assertion</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.DataPropertyAssertion</resourceIriToName>
+        <resourceIriName>Data property assertion</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.DataPropertyDomain</resourceIriToName>
+        <resourceIriName>Data property domain</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.SubObjectPropertyOf</resourceIriToName>
+        <resourceIriName>SubObject property</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.SubDataPropertyOf</resourceIriToName>
+        <resourceIriName>SubData property</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.SubAnnotationPropertyOf</resourceIriToName>
+        <resourceIriName>SubAnnotation property</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.EquivalentObjectProperties</resourceIriToName>
+        <resourceIriName>Equivalent object properties</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.ObjectPropertyDomain</resourceIriToName>
+        <resourceIriName>Property domain</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.ObjectPropertyRange</resourceIriToName>
+        <resourceIriName>Property range</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.InverseObjectProperties</resourceIriToName>
+        <resourceIriName>Inverse object properties</resourceIriName>
+      </userDefinedName>
+
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.FunctionalObjectProperty</resourceIriToName>
+        <resourceIriName>Functional object property</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.DataPropertyRange</resourceIriToName>
+        <resourceIriName>Data property range</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.AnnotationPropertyDomain</resourceIriToName>
+        <resourceIriName>Annotation property domain</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.axiom.AnnotationPropertyRangeOf</resourceIriToName>
+        <resourceIriName>Annotation property range</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/synonym</resourceIriToName>
+        <resourceIriName>synonym(s)</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.w3.org/2000/01/rdf-schema#seeAlso</resourceIriToName>
+        <resourceIriName>see also</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://purl.org/dc/terms/hasPart</resourceIriToName>
+        <resourceIriName>has part</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://purl.org/dc/terms/contributor</resourceIriToName>
+        <resourceIriName>contributor</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://spec.edmcouncil.org/owlnames#mdDefinition</resourceIriToName>
+        <resourceIriName>ontological definition</resourceIriName>
+      </userDefinedName>
+      
+      <userDefinedName>
+        <resourceIriToName>http://www.w3.org/2004/02/skos/core#definition</resourceIriToName>
+        <resourceIriName>definition</resourceIriName>
+      </userDefinedName>  
+      
+      <userDefinedName>
+        <resourceIriToName>@viewer.function.instances</resourceIriToName>
+        <resourceIriName>Instances</resourceIriName>
+      </userDefinedName>  
+            
+      <userDefinedName>
+        <resourceIriToName>@viewer.internal.annotationProperty</resourceIriToName>
+        <resourceIriName>internal annotation property</resourceIriName>
+      </userDefinedName>  
+            
+      <userDefinedName>
+        <resourceIriToName>@viewer.external.annotationProperty</resourceIriToName>
+        <resourceIriName>external annotation property</resourceIriName>
+      </userDefinedName>    
+    </userDefaultNameList>
+    
+  </labelConfig>
+  
+  <groups>
+    <!--The order of elements in groups will be their priority-->
+    <group>
+      <groupName>Glossary</groupName>
+      <groupItem>http://www.w3.org/2000/01/rdf-schema#label</groupItem>
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/hasMaturityLevel</groupItem>
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/synonym</groupItem>
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/abbreviation</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#definition</groupItem>
+      <groupItem>http://spec.edmcouncil.org/owlnames#mdDefinition</groupItem>
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/definitionOrigin</groupItem>
+      <groupItem>http://purl.org/dc/terms/source</groupItem>         
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/directSource</groupItem>         
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/adaptedFrom</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#example</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#scopeNote</groupItem>
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/usageNote</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#editorialNote</groupItem>
+      <groupItem>http://purl.org/dc/terms/title</groupItem>
+      <groupItem>http://purl.org/dc/terms/abstract</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/keyword</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/fileAbstract</groupItem> 
+      <groupItem>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/explanatoryNote</groupItem>
+    </group>
+
+    <group>
+      <groupName>This ontology contains</groupName>
+      <groupItem>@viewer.internal.clazz</groupItem>
+      <groupItem>@viewer.external.clazz</groupItem>
+      <groupItem>@viewer.internal.objectProperty</groupItem>      
+      <groupItem>@viewer.external.objectProperty</groupItem>    
+      <groupItem>@viewer.internal.dataProperty</groupItem>
+      <groupItem>@viewer.external.dataProperty</groupItem>    
+      <groupItem>@viewer.internal.instance</groupItem>
+      <groupItem>@viewer.external.instance</groupItem>    
+      <groupItem>@viewer.internal.annotationProperty</groupItem>
+      <groupItem>@viewer.external.annotationProperty</groupItem>  
+    </group> 
+    
+    <group>
+      <groupName>Ontological characteristic</groupName>
+      <groupItem>@viewer.function.direct_subclasses</groupItem>
+      <groupItem>@viewer.function.instances</groupItem>
+      <groupItem>@viewer.axiom.EquivalentClasses</groupItem>
+      <groupItem>@viewer.axiom.SubClassOf</groupItem>
+      <groupItem>@viewer.function.anonymous_ancestor</groupItem>
+      <groupItem>@viewer.axiom.DisjointClasses</groupItem>
+      <groupItem>@viewer.axiom.ClassAssertion</groupItem>
+      <groupItem>@viewer.axiom.SameIndividual</groupItem>
+      <groupItem>@viewer.axiom.ObjectPropertyAssertion</groupItem>
+      <groupItem>@viewer.axiom.DataPropertyAssertion</groupItem>
+      <groupItem>@viewer.axiom.SubObjectPropertyOf</groupItem>
+      <groupItem>@viewer.axiom.SubDataPropertyOf</groupItem>
+      <groupItem>@viewer.axiom.SubAnnotationPropertyOf</groupItem>
+      <groupItem>@viewer.axiom.EquivalentObjectProperties</groupItem>
+      <groupItem>@viewer.axiom.EquivalentDataProperties</groupItem>
+      <groupItem>@viewer.axiom.ObjectPropertyDomain</groupItem>
+      <groupItem>@viewer.axiom.DataPropertyDomain</groupItem>
+      <groupItem>@viewer.axiom.ObjectPropertyRange</groupItem>
+      <groupItem>@viewer.axiom.FunctionalObjectProperty</groupItem>
+      <groupItem>@viewer.axiom.DataPropertyRange</groupItem>
+      <groupItem>@viewer.axiom.AnnotationPropertyDomain</groupItem>
+      <groupItem>@viewer.axiom.AnnotationPropertyRangeOf</groupItem>
+      <groupItem>@viewer.axiom.InverseObjectProperties</groupItem>
+      <groupItem>http://purl.org/dc/terms/hasPart</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/dependsOn</groupItem>
+    </group>
+    
+    <group>
+      <groupName>Meta-information</groupName>
+      <groupItem>http://purl.org/dc/terms/creator</groupItem>
+      <groupItem>http://purl.org/dc/terms/license</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/copyright</groupItem>
+      <groupItem>http://purl.org/dc/terms/contributor</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/contributor</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/moduleAbbreviation</groupItem>         
+      <groupItem>http://purl.org/dc/terms/issued</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/contentLanguage</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#changeNote</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#note</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/fileAbbreviation</groupItem>
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/filename</groupItem>         
+      <groupItem>http://www.w3.org/2000/01/rdf-schema#comment</groupItem>
+      <groupItem>http://www.w3.org/2000/01/rdf-schema#isDefinedBy</groupItem>
+      <groupItem>http://www.w3.org/2000/01/rdf-schema#seeAlso</groupItem>
+      <groupItem>http://www.w3.org/2004/02/skos/core#historyNote</groupItem> 
+      <groupItem>http://www.omg.org/techprocess/ab/SpecificationMetadata/relatedSpecification</groupItem>                  
+      <groupItem>http://purl.org/dc/terms/hasVersion</groupItem>                  
+    </group>   
+    
+  </groups>
+
+  <!-- Here we define URIs to be treated as IRIs -->
+  <!-- We are currently using the method contains(), please be careful when define URIs -->
+  <scopeIri>
+    <uriNamespace>http://schema.org/</uriNamespace>
+    <uriNamespace>https://spec.edmcouncil.org/fibo/ontology/</uriNamespace>
+    <uriNamespace>https://www.omg.org/spec/</uriNamespace>
+    <uriNamespace>http://www.omg.org/techprocess</uriNamespace>
+    <uriNamespace>http://www.w3.org/2002/07/owl#</uriNamespace>
+    <uriNamespace>http://purl.org/dc/terms/</uriNamespace>
+    <uriNamespace>http://purl.org/dc/elements/1.1/</uriNamespace>
+    <uriNamespace>http://www.w3.org/2000/01/rdf-schema#</uriNamespace>
+    <uriNamespace>http://www.w3.org/2004/02/skos/core#</uriNamespace>
+    <uriNamespace>http://www.w3.org/1999/02/22-rdf-syntax-ns#</uriNamespace>
+  </scopeIri>
+    
+
+  <priorityList>
+    <!--This list will be used when groups is not present-->
+    <priority>http://www.w3.org/2000/01/rdf-schema#subClassOf</priority>
+    <priority>http://www.w3.org/2000/01/rdf-schema#seeAlso</priority>
+  </priorityList>
+   
+ 
+  <searchConfig>
+    
+    <hintFields>
+      <hintField>
+        <fieldIri>http://www.w3.org/2000/01/rdf-schema#label</fieldIri>
+        <fieldBoost>1.0</fieldBoost>
+      </hintField>
+      <hintField>
+        <fieldIri>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/synonym</fieldIri>
+        <fieldBoost>1.0</fieldBoost>
+      </hintField>
+    </hintFields>
+    <hintThreshold>0.0</hintThreshold>
+    
+    <searchFields>
+      <searchField>
+        <fieldIri>http://www.w3.org/2000/01/rdf-schema#label</fieldIri>
+        <fieldBoost>1.0</fieldBoost>
+      </searchField>
+      
+      <searchField>
+        <fieldIri>http://www.w3.org/2004/02/skos/core#definition</fieldIri>
+        <fieldBoost>0.0</fieldBoost>
+      </searchField>
+	  
+      <searchField>
+        <fieldIri>http://purl.org/dc/terms/abstract</fieldIri>
+        <fieldBoost>0.0</fieldBoost>
+      </searchField>
+	  
+      <searchField>
+        <fieldIri>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/synonym</fieldIri>
+        <fieldBoost>1.0</fieldBoost>
+      </searchField>
+	  
+      <searchField>
+        <fieldIri>https://spec.edmcouncil.org/fibo/ontology/FND/Utilities/AnnotationVocabulary/abbreviation</fieldIri>
+        <fieldBoost>1.0</fieldBoost>
+      </searchField>
+	  
+      <searchField>
+        <fieldIri>http://www.omg.org/techprocess/ab/SpecificationMetadata/keyword</fieldIri>
+        <fieldBoost>1.0</fieldBoost>
+      </searchField>
+      
+    </searchFields>
+    <searchThreshold>0.0</searchThreshold>
+    <searchDescriptions>
+      <searchDescription>http://www.w3.org/2004/02/skos/core#definition</searchDescription>
+      <searchDescription>http://purl.org/dc/terms/abstract</searchDescription>
+    </searchDescriptions>
+  </searchConfig>
+  
+  <!--Feature will be added if future
+  <ignoreToLinking>
+    <ignore>http://www.some.iri#ignoreToLinking</ignore>
+  </ignoreToLinking>-->  
+</properties>

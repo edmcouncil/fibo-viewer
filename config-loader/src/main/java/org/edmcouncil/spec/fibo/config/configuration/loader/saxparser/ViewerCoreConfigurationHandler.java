@@ -39,12 +39,6 @@ public class ViewerCoreConfigurationHandler extends DefaultHandler {
   TextSearcherConfig tsc = null;
   SearcherField sf = null;
 
-  public ViewerCoreConfigurationHandler(ViewerCoreConfiguration configuration) {
-    this.config = configuration;
-  }
-
- 
-
   @Override
   public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
     switch (qName) {
@@ -63,7 +57,6 @@ public class ViewerCoreConfigurationHandler extends DefaultHandler {
       case ConfigKeys.LABEL_PRIORITY:
       case ConfigKeys.MISSING_LANGUAGE_ACTION:
       case ConfigKeys.USER_DEFAULT_NAME_LIST:
-
         this.key = qName;
         break;
       case ConfigKeys.GROUP:
@@ -182,7 +175,6 @@ public class ViewerCoreConfigurationHandler extends DefaultHandler {
   }
 
   public ViewerCoreConfiguration getConfiguration() {
-
     return this.config;
   }
 }

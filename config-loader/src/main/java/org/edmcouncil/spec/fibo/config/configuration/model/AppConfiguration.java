@@ -1,6 +1,5 @@
 package org.edmcouncil.spec.fibo.config.configuration.model;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import javax.annotation.PostConstruct;
@@ -23,10 +22,8 @@ public class AppConfiguration {
   @Autowired
   private FileSystemManager fileSystemManager;
   private ViewerCoreConfiguration viewerCoreConfig;
-  private final FileSystemManager fsm;
 
-  public AppConfiguration(FileSystemManager fsm) {
-    this.fsm = fsm;
+  public AppConfiguration() {
   }
 
   @PostConstruct
@@ -37,27 +34,13 @@ public class AppConfiguration {
     Path configFilePath = null;
 
     try {
-
-      configFilePath = fileSystemManager.getPathToConfigFile();
-
-      LOG.debug("Path to Configs Directory : {}", configFilePath.toAbsolutePath().toString());
-      LOG.debug("Load config");
-      LOG.debug("List Files : {}", configFilePath.toFile().listFiles().toString());
-      for (File file : configFilePath.toFile().listFiles()) {
-        LOG.debug("Path to ConfigFile : {}", file.toPath().toString());
-        if (file.isFile()) {
-
-          cl.loadWeaselConfiguration(file.toPath());
-        }
-      }
-
-      this.viewerCoreConfig = cl.getConfiguration();
+      configFilePath = fileSystemManager.getPathToWeaselConfigFile();
 
     } catch (IOException ex) {
       LOG.error("[ERROR] IOException while loading config file");
     }
 
-    this.viewerCoreConfig = cl.getConfiguration();
+    this.viewerCoreConfig = cl.loadWeaselConfiguration(configFilePath);
 
     if (!viewerCoreConfig.isEmpty()) {
       LOG.debug("Configuration: ");
