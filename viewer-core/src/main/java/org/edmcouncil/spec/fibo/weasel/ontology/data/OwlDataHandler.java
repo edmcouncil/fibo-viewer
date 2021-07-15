@@ -492,7 +492,9 @@ public class OwlDataHandler {
       Set<String> ignoredToDisplay,
       String key,
       int startCountingArgs,
+
       boolean bypassClass
+
   ) {
 
     String value = rendering.render(axiom);
@@ -979,6 +981,7 @@ public class OwlDataHandler {
                     opv.setValue(val);
                   }
                   OwlAxiomPropertyValue opv = (OwlAxiomPropertyValue) propertyValue;
+
                   Set<OwlAxiomPropertyValue> owlAxiomPropertyValues = values.getOrDefault(c.getIRI(), new  LinkedHashSet<>());
                   owlAxiomPropertyValues.add(opv);
                   values.put(c.getIRI(), owlAxiomPropertyValues);
@@ -994,7 +997,9 @@ public class OwlDataHandler {
 
     for (Map.Entry<IRI, Set<OwlAxiomPropertyValue>> entry : values.entrySet()) {
       OwlAxiomPropertyValue opv = new OwlAxiomPropertyValue();
+
       sb.append("%arg00%").append(" <br />"); 
+
       int i = 0;
       for (OwlAxiomPropertyValue owlAxiomPropertyValue : entry.getValue()) {
         i++;
@@ -1002,8 +1007,10 @@ public class OwlDataHandler {
         if (i < entry.getValue().size()) {
           sb.append("<br />");
         }
+
         for (Map.Entry<String, OwlAxiomPropertyEntity> mapping : owlAxiomPropertyValue.getEntityMaping().entrySet()) {
           opv.addEntityValues(mapping.getKey(), mapping.getValue());
+
         }
       }
       OwlAxiomPropertyEntity prop = new OwlAxiomPropertyEntity();

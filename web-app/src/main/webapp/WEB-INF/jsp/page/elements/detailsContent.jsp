@@ -64,6 +64,7 @@
           // create a network
           var container = document.getElementById('ontograph');
           const edgeFilters = document.getElementsByName('edgesFilter');
+          const nodeFilters = document.getElementsByName('edgesFilter');
 
           const edgesFilterValues = {
             optional: true,
@@ -85,12 +86,30 @@
               const {value, checked} = e.target;
               edgesFilterValues[value] = checked;
               edgesView.refresh();
+              nodeView.refresh();
+
             }));
           const edgesView = new vis.DataView(edges, {filter: edgesFilter});
+
+          var nodeView = new vis.DataView(nodes, {
+            filter: function (node) {
+              connEdges = edgesView.get({
+                filter: function (edge) {
+                  return(
+                          (edge.to === node.id) || (edge.from === node.id));
+                }});
+
+              return connEdges.length > 0 || node.id === 1;
+            }
+          });
+
+          });
+          
           var data = {
-            nodes: nodes,
+            nodes: nodeView,
             edges: edgesView
           };
+
           var options = {
             "edges": {
               "smooth": {
@@ -98,7 +117,6 @@
                 "forceDirection": "none",
                 "roundness": 0.15
               }
-
             },
             "physics": {
               "forceAtlas2Based": {
